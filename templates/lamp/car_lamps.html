@@ -1,0 +1,11 @@
+{% extends "./base.html"%}
+
+    {% block content %}
+        <p><span style="color:green">{{destination}}</span> | 
+        <span style="color: red">{{category}}</span></p>
+
+        {% include './blocks/products_list.html' %}
+
+    {% endblock content %}
+
+    

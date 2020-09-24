@@ -1,0 +1,118 @@
+{% load lamp_extras %}
+
+{% block lamp_filter %}
+
+    <div class="filter__container">
+
+        <div class="filter__type">
+        <span>
+        Цоколь
+        </span>
+        </div>
+        <div class="filter__type__items">
+            {% for type in types  %}
+                <button class="filter__type__item filter__type__item__lamps"
+                value={{ type }}>
+                    {{ type }}    
+                </button>
+            {% endfor %}
+
+        </div>
+
+        <div class="filter__type">
+        <span>
+        Бренд
+        </span>
+        </div>
+        <div class="filter__type__items">
+            {% for brand in brands  %}
+                <button class="filter__type__item filter__type__item__brands"
+                value={{ brand }}>
+                    {{ brand }}
+                </button>
+            {% endfor %}
+
+        </div>
+
+        
+        <div class="filter__type">
+        <span>
+        Теги
+        </span>
+        </div>
+        <div class="filter__type__items">
+            {% for tag in feature_tags  %}
+                {% if tag.f_tag != 'nan' %}
+                    {% lamp_ftag tag.f_tag as tag_value %}
+                <button class="filter__type__item filter__type__item__tags"
+                value={{ tag_value }}>
+                    {{ tag.f_tag }}
+                </button>
+
+                {% endif %}
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% block javascript %}
+    <script>
+
+    // var brand_elements = $(".filter__type__item__brands")
+
+            
+ $(".filter__type__item").click(function() {
+    $(".ajax__loader").addClass("show")
+    if ($(this).hasClass("active")) {
+        $(this).removeClass("active")
+    } else {
+        $(this).addClass("active")
+    }
+
+        var lamp_elements = $(".filter__type__item__lamps")
+        var brand_elements = $(".filter__type__item__brands")
+        var tags_elements = $(".filter__type__item__tags")
+
+        var tags = get_active_filters(tags_elements)
+        var ltype = get_active_filters(lamp_elements)
+        var lbrands = get_active_filters(brand_elements)
+
+        updateLamps(ltype, lbrands, tags);
+    })
+
+    function updateLamps(ltype, lbrands, tags) {
+        console.log('working')
+        var filter_tags = tags
+        var filter_type = ltype
+        var filter_brand = lbrands
+        console.log(filter_tags)
+        console.log('start updating')
+        
+        $(".products__container").html('').load(
+            "{% url 'lamp:filter_update_lamps' %}?filter_type=" + filter_type + 
+            "&filter_brand=" + filter_brand + "&filter_tags=" + filter_tags,
+            function(response) {
+                $(".ajax__loader").removeClass("show")
+                //console.log(response)
+            }
+        ) 
+
+    } 
+
+    
+    function get_active_filters(elements) {
+        var active_filters = []
+        for (var i = 0, len = elements.length; i < len; i++) {
+            if ($(elements[i]).hasClass("active")) {
+                element_val = $(elements[i]).val()
+                active_filters.push(element_val)
+            }
+        }
+        return active_filters
+    }
+
+    </script>
+    {% endblock javascript %}
+
+{% endblock lamp_filter %}

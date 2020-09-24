@@ -1,0 +1,184 @@
+{% block main_navigation %}
+
+    <div class="header__menu">
+    
+    <div class="nav__category__container">
+        <div class="nav__category">
+            <div class="nav__category__logo">
+                <img src="https://placehold.it/300x100" alt="">
+            </div>
+            <div class="nav__category__heading">
+                <p>
+                    Категории
+                </p>
+            </div>
+            <div class="nav__category__wrap">
+                <div class="nav__category__block">
+                    <ul class="list__unstyled">
+                        <li class="list__item" id="list__lamp__item">
+                            <a href="{% url 'lamp:index' %}" id="lamps__link">
+                                Лампы
+                                <i class="gg-arrow-down-r"></i>
+                            </a>
+                            <div class="nav__fixed">
+                                <ul id="nav__category__lamps"
+                                class="drop__block__lvl ">
+                                    {% for category in categories  %}
+                                        <li class="drop__block__item">
+                                            <a href="{% url 'lamp:category' category %}">
+                                               {{ category }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <span class="menu__trigger">
+        <i class="gg-menu" id="mtrigger"></i>
+    </span>
+
+    </div>
+
+    <div class="header__placeholder">
+        <div class="header__top__container">
+            <div class="header__viewport">
+                <div class="nav__category__logo__header">
+                    <img src="https://placehold.it/300x100" alt="">
+                </div>
+                <form class="form__search" method="get" action="{% url 'lamp:search' %}">
+                    <div class="form__search__wrap">
+                        {% csrf_token %}
+                        <input class="form__search__input" type="search" 
+                        name="q" placeholder="Поиск">
+                        <button class="button__search" type="submit">
+                            <i class="gg-search"></i>
+                        </button>
+                    </div>
+                </form>
+                <div class="header__feedback">
+                    <div class="phone__block">
+                        <p class="phone__contact">7 978 559-92-86</p>
+                        <p class="phone__contact__under">По России бесплатно</p>
+                    </div>
+                </div>
+                <div class="menu__wrapper">
+                    <div class="user__cart">
+                        <a class="user__cart__link" 
+                        href="{% url 'cart:index' %}">
+                            <i class="gg-shopping-bag"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Header middle-->
+        <div class="header__middle__container">
+            <div class="header__middle__viewport">
+                <div class="header__middle__menu">
+                    <ul class="header__middle__nav">
+                        <li class="header__middle__nav__item">
+                            <a href="">
+                                О компании
+                            </a>
+                        </li>
+                        <li class="header__middle__nav__item">
+                            <a href="">
+                                Акции
+                            </a>
+                        </li>
+                        <li class="header__middle__nav__item">
+                            <a href="">
+                                Контакты
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="header__middle__feedback">
+                        <a class="header__middle__feedback__button"
+                        href="">
+                        Заказать звонок
+                        </a>
+                        <a class="header__middle__feedback__button"
+                        href="">
+                        Клиентская служба
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!--Header middle end-->
+
+
+
+    <div class="mobile__nav">
+        <div class="mobile__nav__panels">
+
+            <div id="mobile_main" class="mobile__nav__main">
+
+            <div class="mobile__nav__navbar">
+                <a  class="navbar__title" href="">
+                Каталог
+                </a>
+            </div>
+            <ul class="mobile__nav__listview">
+
+                {% comment %} categories goes here {% endcomment %}
+                <li class="mobile__nav__listview__item">
+                    <a class="mobile__nav__listview__icon" 
+                    href="#lamps_sub" data-target="#lamps_sub">
+                        <i class="gg-arrow-right-r"></i>
+                    </a>
+                    <a class="mobile__nav__listview__cat" 
+                    href="{% url 'lamp:index' %}">
+                        Лампы
+                    </a>
+                </li>
+                {% comment %} end of categories {% endcomment %}
+
+            </ul>
+
+        </div>
+
+                <!--Mobile lamps submenu -->
+            <div id="lamps_sub" class="mobile__submenu">
+                <div class="mobile__nav__navbar">
+                    <a class="mobile__nav__btn__previous"
+                    href="#mobile_main" data-target="#mobile_main">
+                        <i class="gg-arrow-left-r"></i>
+                    </a>
+                    <a  class="navbar__title" href="">
+                    Лампы
+                    </a>
+                </div>
+            <ul class="mobile__nav__listview">
+
+                {% for category in categories  %}
+                
+                <li class="mobile__nav__listview__item">
+                    <a class="mobile__nav__listview__cat" 
+                    href="{% url 'lamp:category' category %}">
+                        {{ category }}
+                    </a>
+                </li>
+
+                {% endfor %}
+
+            </ul>
+            </div>
+              <!--End mobile lamps submenu -->
+
+        </div>
+    </div>
+
+    <div class="mobile__nav__blocker">
+    </div>
+    
+{% endblock main_navigation %}

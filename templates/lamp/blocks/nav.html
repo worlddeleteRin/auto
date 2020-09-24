@@ -1,0 +1,156 @@
+{% load lamp_extras %}
+{% block main_nav %}
+
+
+    {% comment %} Main Navigation {% endcomment %}
+
+    <div class="navbar__main">
+        <div class="container">
+            <div class="nav__body">
+                <div class="nav__logo">
+                <a href="{% url 'lamp:index' %}">
+                    <img src="https://placehold.it/500x500" alt="">
+                </a>
+                </div> 
+                <div class="nav__info">
+                    <span>+7 (978)-xxx-xx-xx</span>
+                </div>
+                <div class="nav__cart">
+                    <a href="{% url 'cart:index' %}">
+                        <i class="gg-shopping-cart">
+                        </i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} <span>logo</span>
+        <span>info</span>
+        <span>
+            <a href="{% url 'cart:index' %}">cart</a>
+        </span> {% endcomment %}
+    </div>
+
+    {% comment %} End Main Navigation {% endcomment %}
+
+
+    {% comment %} Navigation Lamp {% endcomment %}
+    <div>
+
+<div class="navbar__cat">
+   <nav class="navbar navbar-light">
+
+    <div class="mobile__nav__btn">
+        <i class="gg-menu"></i>
+        <span>
+        Каталог
+        </span>
+        </div>
+
+      <ul class="nav-pills">
+    {% for category in categories  %}
+
+         <li class="dropdown">
+	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span style="font-weight: 600;">
+                {{category.cat}}
+                </span>
+                </a>
+	            <div class="dropdown-menu">
+
+                {% cat_type_dist category as types %}
+                {% cat_brand_dist category as brands %}
+
+                
+                <div class="dropdown__lamps">
+                
+                <div class="dropdown__types">
+
+                    <span class="menu-cat-block">Тип лампы</span>
+
+                    {% for type in types.types %}
+
+                        <a class="dropdown-item" href="{% url 'lamp:type' type.ltype__name category %}">
+                        <div style="display: flex; align-items: center;">
+                        <i class="gg-smart-home-light" style="color: orange; max-width: 10px"></i>
+                        <span class="type__text">
+                        {{type.ltype__name}}
+                        <span>
+                        </div>
+                        </a>
+                        
+
+                    {% endfor %}
+
+                </div> <!--End dropdown types-->
+        
+        <div class="dropdown__brands">
+
+        <span class="menu-cat-block">Производитель</span>
+        {% for brand in brands.brands  %}
+            <a class="dropdown-item" href="{% url 'lamp:brand' brand.brand__name category %}">
+            <div style="display: flex; align-items: center;">
+                <i class="gg-comedy-central" style="color: orange; width: 8px;"></i>
+                <span class="type__text">
+                    {{brand.brand__name}}
+                <span>
+                </div>
+            </a>
+        {% endfor %}
+
+        </div> <!--End dropdown brands-->
+
+      
+    {% endfor %}
+
+
+
+                </div>
+
+    </div>
+    </li>
+</ul>
+
+    <div class="search__pc" style="padding-right: 0px;">
+
+        <form class="" method="get" action="{% url 'lamp:search' %}">
+            {% csrf_token %}
+            <input class="" type="search" 
+            name="q" placeholder="Поиск">
+            <button class="" type="submit">Найти</button>
+        </form>
+        
+    </div>
+    <div class="search__mobile">
+        <i class="gg-search " style=""></i>
+    </div> 
+
+     
+
+
+    {% comment %} mobile nav icon {% endcomment %}
+        
+    {% comment %} mobile nav icon {% endcomment %}
+</nav>
+</div>
+
+</div>
+
+<div class="mobile__nav__main">
+    <div class="menu__close">
+        X
+    </div>
+    <div class="mobile__nav__main__container">
+        {% for category in categories  %}
+            <div class="mobile__nav__main__container__cat">
+            <a href="{% url 'lamp:category' category %}">
+                    {{ category }}
+            </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+    {% comment %} End Navigation Lamp {% endcomment %}
+
+{% endblock main_nav %}

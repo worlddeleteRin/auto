@@ -1,0 +1,12 @@
+{% extends './base.html' %}
+
+{% block content %}
+    <div>
+        <p>{{ category }}</p>
+    </div>
+
+    {% include '../lamp/blocks/lamp_filter.html' %}
+
+    {% include '../lamp/blocks/products_list.html' %}
+    
+{% endblock content %}

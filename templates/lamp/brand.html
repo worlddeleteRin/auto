@@ -1,0 +1,17 @@
+{% extends "./base.html"%}
+
+
+    {% block content %}
+
+
+        <div>   
+            <p style="font-weight: 600;">{{selected_category }} {{selected_brand}}</p>
+        </div>
+
+
+            {% include './blocks/products_list.html' %}
+
+
+    {% endblock content %} 
+
+   

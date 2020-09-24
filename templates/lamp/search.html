@@ -1,0 +1,15 @@
+{% extends './base.html' %}
+
+{% block content %}
+
+    {% if lamps %}
+    
+     {% include './blocks/products_list.html' %}
+                    
+                    {% else %}
+                    <p>Ламп не найдено, попробуй еще раз!</p>
+
+            {% endif %}
+        
+        
+{% endblock content %}

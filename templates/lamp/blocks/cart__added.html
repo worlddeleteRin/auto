@@ -1,0 +1,36 @@
+<div class="added__dialog__wrap">
+    <div class="added__dialog__wrap__container">
+        <!-- <div class="added__dialog__wrap__container__close">
+            <i class="gg-close-o added__dialog__wrap__container__close__icon"></i>
+        </div> -->
+        <span>
+        Товар уехал в корзину! 
+        </span>
+        <div class="added__check__todo">
+            <div class="check__todo__continue">
+                Продолжить покупки
+            </div>
+            <a href="{% url 'cart:index' %}"
+            class="check__todo__gotocart">
+                Перейти в корзину
+            </a>
+        </div>
+    </div>
+</div>
+<div class="added__dialog__wrap__close"> 
+</div>
+
+<script>
+    $(".added__dialog__wrap__close").click(function() {
+        $(".added__dialog__wrap").removeClass("show")
+        $(".added__dialog__wrap__close").removeClass("show")
+    })
+    $(".check__todo__continue").click(function() {
+        $(".added__dialog__wrap").removeClass("show")
+        $(".added__dialog__wrap__close").removeClass("show")
+    })
+    $(".check__todo__gotocart").click(function() {
+        $(".added__dialog__wrap").removeClass("show")
+        $(".added__dialog__wrap__close").removeClass("show")
+    })
+</script>

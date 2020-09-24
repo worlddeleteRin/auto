@@ -1,0 +1,123 @@
+{% block lamp_selection_form %}
+
+
+                {% comment %} Car form {% endcomment %}
+                    <div>
+                        Подбор ламп по авто
+                        <form action="{% url 'lamp:form_car' %}">
+                        <div class="form-group row">
+                            <select class="col-sm-4 sel_mark"
+                            name="mark" id="sel_mark">
+                                <option disable selected>Выберите марку</option>
+
+                                {% for mark in marks  %}
+                                    <option value="{{mark.mark}}">
+                                        {{mark.mark}}
+                                    </option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <select class="col-sm-4 sel_model"
+                            name="model" id="sel_model">
+                            <option disable selected>Выберите модель</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <select class="col-sm-4 sel_gen"
+                            name="gen" id="sel_gen">
+                            <option disable selected>Выберите поколение</option>
+
+                            </select>
+                        </div>
+                        <button class="btn btn-dark my-2 my-sm-0" id="car_form_button" 
+                        type="submit">Найти</button>
+                        </form>
+                    </div> 
+                    {% comment %} End Car Form {% endcomment %}
+
+                    {% block javascript %}
+
+        <script>
+
+        function checkCarButton() {
+            if ($(".sel_mark").val() == 'Выберите марку') {
+            $("#car_form_button").prop('disabled', true);
+        } else {
+            $("#car_form_button").prop('disabled', false);
+        }
+        }
+
+        checkCarButton();
+
+        
+
+        sel_model = '<option disable selected>Выберите модель</option>';
+        sel_gen = '<option disable selected>Выберите поколение</option>';
+
+
+        $("#sel_gen").prop('disabled', true);
+        $("#sel_model").prop('disabled', true);
+
+            $("#sel_mark").change(function(e) {
+                event.preventDefault();
+
+                checkCarButton();
+
+                $("#sel_gen").prop('disabled', true);
+                $("#sel_model").prop('disabled', true);
+
+                $(".sel_model").empty();
+                $(".sel_gen").empty();
+
+                $(".sel_model").append(sel_model);
+                $(".sel_gen").append(sel_gen);
+                
+
+                var markdata = $(this).serialize()
+
+                $.ajax({
+                    type: 'GET', 
+                    url: "{% url 'lamp:form_car_ajax' %}",
+                    data: markdata,
+                    success: function(response) {
+                        $("#sel_model").prop('disabled', false);
+                        models = Object.values(response)[0];
+                        for (var i=0; i < models.length; i++) {
+                            item = '<option>'+ models[i]['model'] + '</option>';
+                            $(".sel_model").append(item);
+                        }
+                    },
+                })
+            })
+
+
+            $("#sel_model").change(function(e) {
+                event.preventDefault();
+
+                $(".sel_gen").empty()
+
+                $(".sel_gen").append(sel_gen);
+
+                var modeldata = $(this).serialize();
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{% url 'lamp:form_car_ajax' %}",
+                    data: modeldata,
+                    success: function(response) {
+                        $("#sel_gen").prop('disabled', false);
+                        gens = Object.values(response)[0];
+                        for (var i=0; i < gens.length; i++) {
+                            item = '<option>'+ gens[i]['gen'] + '</option>';
+                            $(".sel_gen").append(item);
+                        }
+                    }
+                })
+
+            })
+        </script>
+    {% endblock javascript %}
+
+{% endblock lamp_selection_form %}

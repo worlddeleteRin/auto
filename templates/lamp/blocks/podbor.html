@@ -1,0 +1,25 @@
+<div class="container__podbor">
+    <div class="row">
+
+        <div class="">
+            <div class="cars__container">
+                <div class="car__title__container">
+                <span class="car__title">Подбор ламп <span class="active">по авто</span>
+                </span>
+                </div>
+                <div class="panel-body">
+                    <ul class="car__select">
+                        {% for auto in cars  %}
+                            <li>
+                                <a class="car_link__choose" 
+                                href="{% url 'lamp:mark' auto.mark %}">
+                                    {{auto.mark}}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul> 
+                </div>
+
+            </div>
+
+        </div>

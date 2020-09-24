@@ -1,0 +1,33 @@
+
+
+{% block products_list %}
+
+{% load lamp_extras %}
+{% load static %}
+
+    
+
+<div class="products__container">
+
+                            {% for lamp  in lamps  %}
+                            
+                            {% comment %} get lamp features {% endcomment %}
+                            {% lamp_features lamp as features %}
+
+                            {% include './lamp_single.html' %}
+
+
+                            {% empty %}
+                                Нет товаров по заданным фильтрам
+                            {% endfor %}
+
+</div>
+
+{% block javascript %}
+
+
+{% endblock javascript %}
+
+
+{% endblock products_list %}
+

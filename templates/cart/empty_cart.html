@@ -1,0 +1,12 @@
+{% load static %}
+
+<div class="empty__cart__wrapper">
+    <div class="empty__cart__container">
+        <img src="{% static 'images_site/empty_cart.svg' %}" alt="">
+        <p>Ваша корзину пуста.</p>
+        <a href="{% url 'lamp:index' %}"
+        class="empty__cart__container__btn">
+            В магазин
+        </a>
+    </div>
+</div>

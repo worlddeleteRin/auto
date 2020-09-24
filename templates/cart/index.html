@@ -1,0 +1,276 @@
+{% extends '../lamp/base.html' %}
+
+{% block content %}
+    <!-- <p>Your session token: <span style="color: green;"> {{ session_key }}</span></p> -->
+
+    {% comment %} {% if cart_items %} {% endcomment %}
+    
+<div class="shop__page__wrapper">
+
+
+    <div class="shop__container">
+
+        <table class="cart__table__main">
+            <thead>
+                <tr>
+                    <th>
+                        
+                    </th>
+                    <th>
+                        Наименование
+                    </th>
+                    <th>
+                        Кол-во, шт.
+                    </th>
+                    <th>
+                        Сумма
+                    </th>
+                </tr>
+            </thead>
+        <tbody class="table__rows">
+
+        {% for item in cart_items  %}
+        <tr class="product__row__item products__check" id="{{item.id}}">
+
+            <td class="cart__first__td">
+            <a class="cart__remove__product" value="{{item.id}}">
+                <i class="gg-trash cartremoveitem__icon"></i>
+            </a>
+                {{ forloop.counter }}
+            </td>
+
+            <td>
+            <a href="{% url 'lamp:product' item.name %}" class="cart__item__name">
+            {{ item.name }} 
+            </a>
+            </td>
+
+            <td class="cart__quantity__block">
+            <a class="item__remove__quantity" value="{{item.id}}">
+                <i class="gg-remove cart__removeitem__icon"></i>
+            </a>
+            <span class="current__item__quantity" value="{{item.quantity}}">
+            {{ item.quantity }} 
+            </span>
+            <a class="item__add__quantity" value="{{item.id}}">
+                <i class="gg-add cart__additem__icon"></i>
+            </a>
+            </td>
+
+            <td>
+            <span class="item__sum__label" id="itemsum-{{item.id}}"  value="{{item.product_order_price}}" >
+            {{ item.product_order_price  }}
+            </span>
+            
+            
+            </td>
+
+        </tr>
+
+        {% endfor %}
+        </tbody>
+        </table>
+
+        <div class="allcart__summ__container">
+        {% if  cart.get_total != 0 %}
+           Сумма покупки:  
+           <span id="allcart__summ" value="{{cart.get_total}}">
+           {{ cart.get_total }} 
+           </span> 
+        {% endif %}
+        </div>
+    </div>
+
+    <div class="order__info__block">
+        <div class="order__info__block__title">
+        Оформление заказа
+        </div>
+            <div class="cart__error__message" id="error__name">
+                Введите ваше имя
+            </div>
+            <input class="cart__input_field"
+            type="text" placeholder="Имя" name="name"> <br>
+            <div class="cart__error__message" id="error__phone">
+                Введите ваш номер телефона
+            </div>
+            <input class="cart__input_field"
+            type="phone" placeholder="Телефон" name="phone"> <br>
+            <div class="cart__error__message" id="error__email">
+                Введите вашу почту
+            </div>
+            <input class="cart__input_field"
+            type="text" placeholder="Почта" name = "email"> <br>
+
+            <div class="create__order__container">
+        <a class="create__order__button">
+            Оформить заказ
+        </a>
+            </div>
+    </div>
+
+
+</div>
+
+    {% comment %} {% else %}
+
+    {% endif %} {% endcomment %}
+    {% include './empty_cart.html' %} 
+
+    {% include './thank_page.html' %}
+
+{% endblock content %}
+
+{% block javascript %}
+    <script>
+    checkEmpty()
+    $(".cart__remove__product").click(function() {
+        var pr_id = $(this).attr("value")
+        var current_row = $('.product__row__item#' + pr_id)
+        $.ajax({
+            url: "{% url 'cart:remove_product_ajax' %}",
+            data: {
+                'pr_id': pr_id,
+            },
+            success: function(data) {
+                console.log(data)
+                current_row.remove()
+                checkEmpty()
+                getUpdateAllSum()
+                
+            }
+        })
+    })
+
+    $(".item__remove__quantity").click(function() {
+        var pr_id = $(this).attr("value")
+        var current_row = $('.product__row__item#' + pr_id)
+        var current_quantity = $(current_row).find('.current__item__quantity')
+        console.log(pr_id)
+        $.ajax({
+            url: "{% url 'cart:remove_quantity_ajax' %}",
+            data: {
+                'pr_id': pr_id,
+            },
+            success: function(data) {
+                console.log(data)
+                if (data['message'] == 'deleted') {
+                    current_row.remove()
+                    getUpdateAllSum()
+                    checkEmpty()
+                } else {
+                    $(current_quantity).attr('value', data['message'])
+                    $(current_quantity).html(data['message'])
+                    getUpdateSum(pr_id)
+                    getUpdateAllSum()
+                    checkEmpty()
+                }
+            }
+        })
+    })
+
+    $(".item__add__quantity").click(function() {
+        product_id = $(this).attr("value")
+        var current_row = $('.product__row__item#' + product_id)
+        var current_quantity = $(current_row).find('.current__item__quantity')
+        $.ajax({
+            url: "{% url 'cart:add_quantity_ajax' %}",
+            data: {
+                'pr_id': product_id,
+            }, 
+            success: function(data) {
+                $(current_quantity).attr('value', data['quantity'])
+                $(current_quantity).html(data['quantity'])
+                getUpdateSum(product_id)
+                getUpdateAllSum()
+            }
+        })
+    })
+    function getUpdateSum(id) {
+       $.ajax({
+            url: "{% url 'cart:update_sum_ajax' %}",
+            data: {
+                'pr_id': id,
+            }, 
+            success: function(data) {
+            console.log(data)
+            $(".item__sum__label#"+"itemsum-" + id).html(data['sum'])
+            $(".item__sum__label#"+"itemsum-" + id).attr("value", data['sum'])
+            }
+        }) 
+    }
+    function getUpdateAllSum() {
+       $.ajax({
+            url: "{% url 'cart:update_cartsum_ajax' %}",
+            data: {
+                'message': 'update_all'
+            }, 
+            success: function(data) {
+            console.log(data)
+            $("#allcart__summ").html(data['cart_summ'])
+            $("#allcart__summ").attr("value", data['cart_summ'])
+            }
+        }) 
+    }
+    $(".create__order__button").click(function() {
+        var name = $('input[name=name]').val()
+        var phone = $('input[name=phone]').val()
+        var email = $('input[name=email]').val()
+        var status = checkOrderInfo(name, phone, email)
+        if (status == 'ok') {
+            $.ajax({
+                url: "{% url 'cart:create_order_ajax'  %}",
+                data: {
+                    'name': name,
+                    'phone': phone,
+                    'email': email,
+                },
+                success: function(data) {
+                    $(".shop__page__wrapper").html('')
+                    $(".thank__wrap").addClass("show")
+                }
+            })
+        }
+        else {
+
+        }
+    })
+    function checkOrderInfo(name, phone, email) {
+        var status = 'ok'
+        var name = $('input[name=name]').val()
+        var phone = $('input[name=phone]').val()
+        var email = $('input[name=email]').val()
+        console.log(name)
+        if (name.length < 1) {
+            $("#error__name").addClass('show')
+            status = 'wrong'
+        } else {
+            $("#error__name").removeClass('show')
+        }
+        if (phone.length < 1) {
+            $("#error__phone").addClass('show')
+            status = 'wrong'
+        } else {
+            $("#error__phone").removeClass('show')
+        }
+        if (email.length < 1) {
+            $("#error__email").addClass('show')
+            status = 'wrong'
+        } else {
+            $("#error__email").removeClass('show')
+        }
+
+        return status
+    }
+    function checkEmpty() {
+        console.log('checking if empty...')
+        if ($(".product__row__item").hasClass("products__check")) {
+            console.log('it is')
+        } else {
+            console.log('it is not')
+            $(".empty__cart__wrapper").addClass("show")
+            $(".shop__page__wrapper").addClass("hide")
+        }
+    }
+    </script>
+    
+{% endblock javascript %}

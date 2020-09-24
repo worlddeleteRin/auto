@@ -1,0 +1,38 @@
+{% extends './base.html' %}
+{% load lamp_extras %}
+
+{% block content %}
+
+    <div class="mar__panel__title">
+        Лампы для {{selected_mark}} {{selected_model}} {{selected_gen}}
+    </div>
+    
+    <div class="mark__panel__choose__title">
+        Выберите тип лампы
+    </div>
+
+    <div class="">
+        <ul class="list-unstyled car__marks__container__wrapper">
+
+            {% for key in destCat.keys  %}
+            <div class="gen__keys__wrapper">
+                <div class="gen__keys__wrapper__title">
+                {{key}}
+                </div>
+                <div class="gen__keys__wrapper__items">
+                {% for value in destCat|key:key  %}
+                    <a href="{% url 'lamp:car_lamps' selected_mark selected_model selected_gen key value %}">
+                        <p class="car_link_category" style="font-size: 12px;">
+                        {{value}}</p>
+                    </a>
+                    
+                {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        
+        </ul>
+    </div>
+   
+    {% endblock content %}
+  

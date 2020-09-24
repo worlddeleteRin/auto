@@ -1,0 +1,10 @@
+{% extends './base.html' %}
+
+{% block content %}
+    <p>Все бренды: </p>
+        {% for brand in brands %}
+            <a href="{% url 'lamp:spesbrand' brand.name %}">
+                <p>{{brand}}</p>
+            </a>
+        {% endfor %}
+{% endblock content %}

@@ -1,0 +1,81 @@
+{% load static %}
+
+<div class="product__container">
+
+    <div class="product__title__container">
+   <a href="{% url 'lamp:product' lamp.name %}">
+                   <div class="product__title">{{lamp.name}}</div>
+               </a>
+   </div>
+
+   <div class="product__card">
+
+
+           <div class="img-wrap">
+           <a href="{% url 'lamp:product' lamp.name %}">
+           <img class="img-wrap__img" 
+           src="{% static 'images/' %}{{lamp.imgsrc}}">
+           </a>
+           </div>
+
+
+           <div class="product__feature__container">
+           {% if lamp.f_tag != 'nan' %}
+            {% if lamp.f_tag == 'Дизайн без потери яркости' %}
+               <span class="product__feature" style="background-color: orange;">
+               {{lamp.f_tag}}
+               </span>
+            {% endif %}
+            {% if lamp.f_tag == 'Максимум яркости' %}
+               <span class="product__feature" style="background-color: rgb(68,68,68);">
+               {{lamp.f_tag}}
+               </span>
+            {% endif %}
+            {% if lamp.f_tag == 'Стандарт' %}
+               <span class="product__feature" style="background-color: rgb(3,162,73);">
+               {{lamp.f_tag}}
+               </span>
+            {% endif %}
+            {% if lamp.f_tag == 'Ярче при сохранении срока службы' %}
+               <span class="product__feature" style="background-color: rgb(53,98,251);">
+               {{lamp.f_tag}}
+               </span>
+            {% endif %}
+            {% if lamp.f_tag == 'Тюнинг' %}
+               <span class="product__feature" style="background-color: rgb(79,50,204);">
+               {{lamp.f_tag}}
+               </span>
+            {% endif %}
+            {% if lamp.f_tag == 'Отлично в дождь и туман' %}
+               <span class="product__feature" style="background-color: rgb(255,204,2);">
+               {{lamp.f_tag}}
+               </span>
+            {% endif %}
+            {% if lamp.f_tag == 'Увеличенный срок службы' %}
+               <span class="product__feature" style="background-color: rgb(20,170,183);">
+               {{lamp.f_tag}}
+               </span>
+            {% endif %}
+           {% endif %}
+           </div>
+
+           <div class="product__card__info">
+
+               <div class="price__container">
+                   <span class="price-new">{{lamp.price}} 
+                       <strong>₽</strong>
+                   </span> 
+               </div> <!-- price-wrap.// -->
+
+               <div class="product__list__button__div">
+               <a class="product__list__button" value="{{lamp.id}}">
+               Купить
+               </a>	
+               </div>
+               
+
+           </div>
+
+           </div>
+
+   </div>

@@ -1,0 +1,92 @@
+{% load lamp_extras %}
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% comment %} fonts {% endcomment %}
+    <link href="{% static 'packages/fonts/YanoneKaffeesatz-Bold.ttf' %}"> 
+    {% comment %} end fonts {% endcomment %}
+
+    <link rel="stylesheet" href="{% static 'lamp/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+      <link href='https://css.gg/css' rel='stylesheet'>
+    
+    <link rel="stylesheet" href="{% static 'packages/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'packages/fontawesome.min.css' %}">
+
+ 
+
+     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
+
+
+    <title>Title here</title>
+</head>
+<body>
+
+    <div class="body__main">
+
+    {% include './blocks/nav_main.html' %}
+
+    <div class="main__container">
+
+        <div class="main__content">
+        
+            
+            {% block content %}
+            {% endblock content %}
+
+            {% block javascript %}
+            {% endblock javascript %}
+
+        </div>
+
+    </div>
+
+
+{% include './blocks/cart__added.html' %}
+
+
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'packages/popper.min.js' %}"></script>
+<script src="{% static 'packages/bootstrap.min.js' %}"></script>
+
+
+</div>
+</body>
+
+
+<script>
+  $(".product__list__button").click(function() {
+            console.log('click on button')
+    product_id = $(this).attr("value")
+    $.ajax({
+        url: "{% url 'cart:add_product_ajax' %}",
+        data: {
+            'product_id': product_id
+        }, 
+        success: function(data) {
+            console.log(data)
+            $(".added__dialog__wrap").addClass("show")
+            $(".added__dialog__wrap__close").addClass("show")
+           // setTimeout(function() {
+            //    $(".added__dialog__wrap").removeClass("show")
+            //}, 1500)
+            
+        }
+    })
+})
+</script>
+
+
+</html>

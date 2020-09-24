@@ -1,0 +1,34 @@
+{% extends "./base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+
+                <div class="block_filter block_cars_main">
+                    <div class="panel-heading">
+                        <div class="mar__panel__title">Лампы для 
+                            <span class="active">{{selected_mark}}
+                            </span>
+                    </div>
+                        <div class="mark__panel__choose__title">
+                            Выберите модель
+                        </div>
+                    </div>
+                    <div class="">
+                        <ul class="list-unstyled car__marks__container__wrapper">
+                            {% for model in models %}
+                            <li>
+                                <a href="{% url 'lamp:model' model.mark model.model %}">
+                                <p class="car_link_page"
+                                >{{model.model}}</p>
+                                </a>
+                            </li>
+                            {% endfor %} 
+                        </ul> 
+                    </div>
+                </div>
+
+
+    {% endblock content %}
+  

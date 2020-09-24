@@ -1,0 +1,13 @@
+{% load static %}
+
+<div class="thank__wrap">
+    <div class="thank__container">
+        <img src="{% static 'images_site/cart_car.svg'%}" alt="cart_image" class="cart__car__img">
+        <p>Ваш заказ принят!</p>
+        <span>В ближайшее время с вами свяжется менеджер.</span>
+        <a href="{% url 'lamp:index' %}">
+            <i class="gg-arrow-long-left"></i>
+            Назад в магазин
+        </a>
+    </div>
+</div>
