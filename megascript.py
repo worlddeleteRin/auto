@@ -2,7 +2,8 @@ import os
 import pandas as pd
 from lamp.models import * 
 
-main_path = os.getcwd()
+# main_path = os.getcwd()
+main_path = '/Users/noname/learn/django/auto_host'
 
 def createlamps():
     print('---------------------')

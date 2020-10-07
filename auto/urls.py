@@ -20,4 +20,5 @@ urlpatterns = [
     path('', include('lamp.urls')),
     path('admin/', admin.site.urls),
     path('cart/', include('cart.urls')),
+    path('dvorniki/', include('dvorniki.urls')),
 ]

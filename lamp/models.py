@@ -68,10 +68,7 @@ class Lamps(models.Model):
         return self.name
 
     
-
-
-
-def deleteallobjects():
+def lampdeleteall():
     lamp = Lamps.objects.all()
     types = Type.objects.all()
     cat = Category.objects.all()

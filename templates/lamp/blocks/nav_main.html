@@ -22,7 +22,25 @@
                             </a>
                             <div class="nav__fixed">
                                 <ul id="nav__category__lamps"
-                                class="drop__block__lvl ">
+                                class="drop__block__lvl">
+                                    {% for category in categories  %}
+                                        <li class="drop__block__item">
+                                            <a href="{% url 'lamp:category' category %}">
+                                               {{ category }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="list__item" id="list__dvorniki__item">
+                            <a href="{% url 'dvorniki:index' %}" id="dvorniki__link">
+                                Дворники
+                                <i class="gg-arrow-down-r"></i>
+                            </a>
+                            <div class="nav__fixed">
+                                <ul id="nav__category__dvorniki"
+                                class="drop__block__lvl">
                                     {% for category in categories  %}
                                         <li class="drop__block__item">
                                             <a href="{% url 'lamp:category' category %}">

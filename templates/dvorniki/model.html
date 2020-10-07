@@ -1,0 +1,38 @@
+{% extends '../lamp/base.html' %}
+
+    {% block content %}
+
+      <div class="container">
+        <div class="row">
+
+            <div class="block_cars_main">
+                <div class="cars_gen">
+                    <div>
+                        <div class="mar__panel__title">
+                            Дворники для 
+                            <span class="active">
+                                {{selected_mark}} {{selected_model}}
+                            </span>
+                    </div>
+                    </div>
+                    <div class="mark__panel__choose__title">
+                        Выберите поколение авто
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-unstyled car__marks__container__wrapper">
+                            {% for car in cars %}
+                            <div>
+                            <a href="{% url 'dvorniki:gen' car.mark.id car.model.id car.id %}">
+                            <div class="car_link_page">
+                                <img src="{{car.gen_img}}" alt="">
+                            {{car.gen.name}}</div>
+                            </a>
+                            </div>
+                            {% endfor %}
+                        </ul> 
+                    </div>
+                </div>
+            </div>
+
+    {% endblock content %}
+    

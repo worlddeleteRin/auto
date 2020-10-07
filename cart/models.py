@@ -11,6 +11,7 @@ class Cart(models.Model):
         for item in self.item_set.all():
             total += item.price * item.quantity
         return total
+    
 
 
 class Orders(models.Model):
@@ -19,7 +20,10 @@ class Orders(models.Model):
     phone = models.CharField(max_length = 50, default = '')
     email = models.CharField(max_length = 200, default = '')
 
-
+    def __str__(self):
+        return self.name
+    
+    
 class Item(models.Model):
     cart = models.ForeignKey(Cart, on_delete = models.CASCADE, default = None,
     blank = True, null = True)
