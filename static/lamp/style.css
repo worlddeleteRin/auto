@@ -537,15 +537,14 @@ body.hidden {
 }
 
 .nav__category__logo {
-    margin: 0;
-    padding: 21px 24px 19px;
+    display: flex;
+    justify-content: center;
 }
 
 .nav__category__logo img {
     background-repeat: no-repeat;
     display: inline-block;
-    width: 111px;
-    height: 40px;
+    max-height: 100px;
     vertical-align: middle;
 }
 
@@ -1252,7 +1251,7 @@ th {
 }
 .cart__item__name {
     color: black;
-    text-decoration: underline;
+    /* text-decoration: underline; */
     transition: all 0.4s;
 }
 .cart__item__name:hover {
@@ -1423,6 +1422,7 @@ box-shadow: 0px 7px 13px 0px rgba(0,0,0,0.26);
     text-decoration: none;
     border-style: solid;
     border-color: green;
+    outline: none;
 }
 .order__info__block__title {
     margin-bottom: 20px;

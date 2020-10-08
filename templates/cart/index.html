@@ -40,7 +40,7 @@
             </td>
 
             <td>
-            <a href="{% url 'lamp:product' item.name %}" class="cart__item__name">
+            <a class="cart__item__name">
             {{ item.name }} 
             </a>
             </td>
@@ -85,20 +85,21 @@
         <div class="order__info__block__title">
         Оформление заказа
         </div>
-            <div class="cart__error__message" id="error__name">
+            <div class="cart__error__message" id="error__name"
+            >
                 Введите ваше имя
             </div>
-            <input class="cart__input_field"
+            <input class="cart__input_field" autocomplete="off"
             type="text" placeholder="Имя" name="name"> <br>
             <div class="cart__error__message" id="error__phone">
                 Введите ваш номер телефона
             </div>
-            <input class="cart__input_field"
+            <input class="cart__input_field" autocomplete="off"
             type="phone" placeholder="Телефон" name="phone"> <br>
             <div class="cart__error__message" id="error__email">
                 Введите вашу почту
             </div>
-            <input class="cart__input_field"
+            <input class="cart__input_field"   autocomplete="off"
             type="text" placeholder="Почта" name = "email"> <br>
 
             <div class="create__order__container">

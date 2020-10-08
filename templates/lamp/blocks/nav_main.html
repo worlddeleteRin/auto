@@ -1,3 +1,4 @@
+{% load static %}
 {% block main_navigation %}
 
     <div class="header__menu">
@@ -5,7 +6,7 @@
     <div class="nav__category__container">
         <div class="nav__category">
             <div class="nav__category__logo">
-                <img src="https://placehold.it/300x100" alt="">
+                <img src="{% static 'images_site/auto_logo.png' %}" alt="">
             </div>
             <div class="nav__category__heading">
                 <p>
@@ -38,7 +39,7 @@
                                 Дворники
                                 <i class="gg-arrow-down-r"></i>
                             </a>
-                            <div class="nav__fixed">
+                            <!-- <div class="nav__fixed">f
                                 <ul id="nav__category__dvorniki"
                                 class="drop__block__lvl">
                                     {% for category in categories  %}
@@ -49,7 +50,7 @@
                                         </li>
                                     {% endfor %}
                                 </ul>
-                            </div>
+                            </div> -->
                         </li>
                     </ul>
                 </div>
