@@ -34,7 +34,6 @@ def createcars():
         )[0]
 
         current_gen = Dvgen.objects.get_or_create(
-            mark = current_mark,
             model = current_model,
             name = gen,
         )[0]
@@ -59,7 +58,7 @@ def createcars():
 
 def createdvorniki():
     i = 0
-    data = pd.read_csv(path + 'data_main.csv')
+    data = pd.read_csv(path + 'data2.csv')
 
     for index, item in data.iterrows():
         print('start creating new product')

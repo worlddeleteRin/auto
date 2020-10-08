@@ -67,7 +67,8 @@
 
 
 <script>
-  $(".product__list__button").click(function() {
+    
+  $(".product__list__button__lamps").click(function() {
             console.log('click on button')
     product_id = $(this).attr("value")
     $.ajax({
@@ -86,6 +87,28 @@
         }
     })
 })
+
+$(".product__list__button__dvorniki").click(function() {
+            console.log('click on button')
+    product_id = $(this).attr("value")
+    $.ajax({
+        url: "{% url 'cart:add_product_ajax_dvorniki' %}",
+        data: {
+            'product_id': product_id
+        }, 
+        success: function(data) {
+            console.log(data)
+            $(".added__dialog__wrap").addClass("show")
+            $(".added__dialog__wrap__close").addClass("show")
+           // setTimeout(function() {
+            //    $(".added__dialog__wrap").removeClass("show")
+            //}, 1500)
+            
+        }
+    })
+})
+ 
+
 </script>
 
 

@@ -22,5 +22,5 @@ urlpatterns = [
     path('update_sum_ajax/', views.update_sum_ajax, name = 'update_sum_ajax'),
     path('update_cartsum_ajax/', views.update_cartsum_ajax, name = 'update_cartsum_ajax'),
     path('create_order_ajax/', views.create_order_ajax, name = 'create_order_ajax'),
-
+    path('add_product_ajax_dvorniki/', views.add_product_ajax_dvorniki, name = 'add_product_ajax_dvorniki'),
 ]

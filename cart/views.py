@@ -6,6 +6,7 @@ from django.urls import reverse
 from .models import * 
 
 from lamp.models import *
+from dvorniki.models import * 
 
 import urllib.parse
 
@@ -249,3 +250,45 @@ def create_order_ajax(request):
     return JsonResponse({
         'created': 'yes'
     }, status = 200)
+
+
+
+
+def add_product_ajax_dvorniki(request):
+    if not request.session.session_key:
+        request.session.create()
+        current_session_key = request.session.session_key
+    else:
+        current_session_key = request.session.session_key
+
+    cart = Cart.objects.get_or_create(
+        session_key = current_session_key
+    )[0]
+
+    pr = Dvornik.objects.get(id = request.GET['product_id'])
+    product_name = pr.name
+    product_price = pr.price
+
+    if (Item.objects.filter(cart__session_key = current_session_key,
+    name = product_name).exists()):
+        item = Item.objects.get(cart__session_key = current_session_key,
+    name = product_name)
+        item.quantity += 1
+        item.save()
+        return JsonResponse({
+            'created': 'yes',
+            'is_new': 'no'
+        }, status = 200)
+        # return HttpResponseRedirect(reverse(request.path_info))
+    else:
+        pr_item = Item(
+            cart = cart,
+            name = product_name,
+            price = product_price,
+        )
+        pr_item.save()
+        return JsonResponse({
+            'created': 'yes',
+            'is_new': 'yes'
+        }, status = 200)
+        # return HttpResponseRedirect(request.path_info)

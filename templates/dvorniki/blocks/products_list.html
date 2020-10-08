@@ -1,0 +1,30 @@
+
+
+{% block products_list %}
+
+{% load static %}
+
+<div class="products__container">
+    
+                    
+
+                            {% for dvornik  in dvorniki  %}
+                            
+
+
+                            {% include './dvornik_single.html' %}
+                            {% endfor %}
+
+
+                            
+
+</div>
+
+{% block javascript %}
+
+
+{% endblock javascript %}
+
+
+{% endblock products_list %}
+

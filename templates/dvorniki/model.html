@@ -22,7 +22,7 @@
                         <ul class="list-unstyled car__marks__container__wrapper">
                             {% for car in cars %}
                             <div>
-                            <a href="{% url 'dvorniki:gen' car.mark.id car.model.id car.id %}">
+                            <a href="{% url 'dvorniki:gen' car.mark.id car.model.id car.gen.id %}">
                             <div class="car_link_page">
                                 <img src="{{car.gen_img}}" alt="">
                             {{car.gen.name}}</div>

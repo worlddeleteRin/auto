@@ -1,0 +1,47 @@
+{% load static %}
+
+<div class="product__container">
+
+    <div class="product__title__container">
+   <a href="{% url 'dvorniki:product' dvornik.id %}">
+                   <div class="product__title">{{dvornik.name}}</div>
+               </a>
+   </div>
+
+   <div class="product__card">
+
+
+           <div class="img-wrap">
+           <a href="{% url 'dvorniki:product' dvornik.id %}" >
+    
+           <img class="img-wrap__img" 
+           src="{{dvornik.imgsrc}}">
+           </a>
+           </div>
+
+
+
+
+
+           <div class="product__card__info">
+
+               <div class="price__container">
+                   <span class="price-new">{{dvornik.price}} 
+                       <strong>₽</strong>
+                   </span> 
+               </div> <!-- price-wrap.// -->
+
+               <div class="product__list__button__div">
+               <a class="product__list__button
+               product__list__button__dvorniki" 
+               value="{{dvornik.id}}">
+               Купить
+               </a>	
+               </div>
+               
+
+           </div>
+
+           </div>
+
+   </div>

@@ -82,11 +82,17 @@ def gen(request, mark_id, model_id, gen_id):
         model = current_model,
         gen = current_gen,
     )
-    cars = cars.values('id')
-
+    print('here is first cars')
+    print(cars)
+    cars = list(cars.values_list('id', flat=True))
+    print('here is cars')
+    print(cars)
     dvorniki = Dvornik.objects.filter(
-        cars__in = [cars]
+        cars__in = cars,
     )
+
+    print('here is dvorniki')
+    print(dvorniki)
     
     return render(request, 'dvorniki/gen.html', {
         'categories': ct,
@@ -98,4 +104,24 @@ def gen(request, mark_id, model_id, gen_id):
         'dvorniki': dvorniki,
     })
 
+def product(r, product_id):
+    ct = Category.objects.all()
+
+    product = Dvornik.objects.get(
+        id = product_id,
+    )
+
+    cross_m = product.cars.all().values('mark').distinct()
+    cross_marks = Dvmark.objects.filter(
+        id__in = cross_m,
+    )
+    cross_cars = product.cars.all()
+
+    return render(r, 'dvorniki/product.html', {
+         'categories': ct,
+
+         'product': product,
+         'cross_marks': cross_marks,
+         'cross_cars': cross_cars,
+    })
 

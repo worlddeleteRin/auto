@@ -1,0 +1,180 @@
+{% extends "../lamp/base.html"%}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="product__item__wrapper">
+        <div class="product__item__img">
+            <img src="{{product.imgsrc}}" alt="">
+        </div>
+        <div class="product__item__info">
+            <div class="product__item__name">
+                {{ product.name }}
+            </div>
+
+
+                <div class="product__item__price">
+                <span>
+                {{ product.price }} &#8381
+                </span>
+                </div>
+                    <div class="product__item__page__addcart">
+                    <a class="product__list__button
+                    product__list__button__dvorniki"
+                     value="{{product.id}}">
+                    В корзину
+                    </a>	
+                    </div>
+
+
+                <div class="product__item__properties">
+                    <div class="product__item__properties__title">
+                            <span>
+                            Особенности
+                            </span>
+                    </div>
+                    <div class="product__item__properties__items">
+
+                        <ul class="product__item__properties__feature__item">
+
+                            <li>
+                                <i class="gg-check">
+                                </i>
+                                {{ product.dvtype }}
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="product__item__properties__title">
+                        <span>
+                        Характеристики
+                        </span>
+                    </div>
+                        <div class="product__items__second__properties">
+                        
+                    <div class="product__item__properties__item">
+                        <span>
+                            Бренд:
+                        </span>
+                        <span>
+                            {{ product.brand }}
+                        </span>
+                    </div>
+
+                    <div class="product__item__properties__item">
+                        <span>
+                            Серия:
+                        </span>
+                        <span>
+                            {{ product.ser }}
+                        </span>
+                    </div>
+
+                    
+                    </div>
+
+                    <div class="product__item__properties__title">
+                        <span>
+                        Поддерживаются крепления
+                        </span>
+                    </div>
+                    <div class="product__items__second__properties">
+                    <div class="product__item__properties__item">
+                        
+                        {% for krep in product.kreplenie.all   %}
+                            {{ krep }} |
+                        {% endfor %}
+
+                    </div>
+                    </div>
+
+                </div>
+                
+        </div>
+    </div>
+
+      
+
+    <div class="product__pass__cars">
+    Список машин, к которым подходят дворники {{product.ltype}}:
+    </div>
+
+    {% comment %} {{ cross_cars }} {% endcomment %}
+
+   
+    
+    {% comment %} Cars to pass {% endcomment %}
+
+<ul class="nav nav-tabs product__markmatch__wrap">
+
+    {% for mark in cross_marks  %}
+
+        <li>
+            <a class="match_link" data-toggle="tab" href="#mark-{{mark.id}}">
+                <button class="match_link_btn" style="
+                margin: 3px 10px 3px 10px;
+                ">
+                    {{mark.name}}
+                </button>
+            </a>
+        </li>
+
+
+    {% endfor %}
+    
+    
+  </ul>
+
+
+  <div class="tab-content">
+
+
+                {% for mark in cross_marks  %}
+            
+                    <div id="mark-{{mark.id}}" class="tab-pane fade">
+
+                        <div class="panel-body">
+                            <ul class="list-unstyled product__cars__match">
+
+                                {% for car in cross_cars  %}
+
+                                    {% if car.mark.id == mark.id %}
+
+                                    <li>
+
+                                        <a class="car_link" 
+                                        href="{% url 'dvorniki:gen' car.mark.id car.model.id car.gen.id %}">
+                                            {{car}}
+                                        </a>
+
+                                    </li>
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                        
+                    </div>              
+
+        {% endfor %} 
+    
+  </div>
+  
+</div>
+
+    {% comment %} Cars to pass {% endcomment %}
+
+
+
+{% endblock content %}
+
+{% block javascript %}
+
+<script>
+     
+</script>
+
+{% endblock javascript %}

@@ -9,27 +9,42 @@ class Dvmark(models.Model):
         return self.name
 
 class Dvmodel(models.Model):
-    mark = models.ForeignKey(Dvmark, on_delete = models.DO_NOTHING,)
+    mark = models.ForeignKey(Dvmark,
+    on_delete = models.CASCADE, default = None,
+    blank = True, null = True)
     name = models.CharField(max_length=200, default = '')
     def __str__(self):
         return self.name
 
 class Dvgen(models.Model):
-    mark = models.ForeignKey(Dvmark, on_delete = models.DO_NOTHING,)
-    model = models.ForeignKey(Dvmodel, on_delete = models.DO_NOTHING,)
+    model = models.ForeignKey(Dvmodel,
+    on_delete = models.CASCADE, default = None,
+    blank = True, null = True)
     name = models.CharField(max_length=200, default = '')
 
+    def __str__(self):
+        return self.name
+
 class Dvcar(models.Model): 
-    mark = models.ForeignKey(Dvmark, on_delete = models.DO_NOTHING,)
-    model = models.ForeignKey(Dvmodel, on_delete = models.DO_NOTHING,)
-    gen = models.ForeignKey(Dvgen, on_delete = models.DO_NOTHING,)      
+    mark = models.ForeignKey(Dvmark,
+    on_delete = models.CASCADE, default = None,
+    blank = True, null = True)
+    model = models.ForeignKey(Dvmodel,
+    on_delete = models.CASCADE, default = None,
+    blank = True, null = True)
+    gen = models.ForeignKey(Dvgen, 
+    on_delete = models.CASCADE, default = None,
+    blank = True, null = True)      
+
+    def __str__(self):
+        return self.gen.name
 
 
     gen_img = models.CharField(max_length = 3000,
     default="https://placehold.it/420x327")
 
     def __str__(self):
-        return self.mark.name + ' ' + self.model.name + ' ' + self.gen
+        return self.mark.name + ' ' + self.model.name + ' ' + self.gen.name
 
     
 class Dvkreplenie(models.Model):
@@ -89,8 +104,8 @@ def dvdeleteall():
     dvt = Dvtype.objects.all()
     dvser = Dvser.objects.all()
     dvb = Dvbrand.objects.all()
-    dvkr = Dvkreplenie.objects.all()
     dvcar = Dvcar.objects.all()
+    dvkr = Dvkreplenie.objects.all()
 
     
     dvkr.delete()
