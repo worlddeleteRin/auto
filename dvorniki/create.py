@@ -72,6 +72,7 @@ def createdvorniki():
         series_name = item['series_name']
         print('series name is', series_name)
         series = Dvser.objects.get_or_create(
+            brand = brand,
             name = str(series_name)
         )[0]
         print('series is', series)
@@ -86,6 +87,9 @@ def createdvorniki():
         name = item['item_name']
         price = item['price']
         imgsrc = item['imgurl']
+        sku = item['sku']
+        length = item['length'].replace('см', '').strip()
+        country = item['country']
         if math.isnan(price):
             price = 0
         new_dvornik = Dvornik(
@@ -94,6 +98,9 @@ def createdvorniki():
             dvtype = dvtype,
             name = str(name),
             price = int(price),
+            sku = sku,
+            length = length,
+            country = country,
             imgsrc = imgsrc,
         )
         new_dvornik.save()

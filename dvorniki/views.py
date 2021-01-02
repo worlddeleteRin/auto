@@ -16,10 +16,13 @@ def index(request):
     
     marks = Dvmark.objects.all()
 
+    dv_brands = Dvbrand.objects.all()
+
     return render(request, 'dvorniki/index.html', {
         'categories': ct,
 
         'marks': marks,
+        'dvbrands': dv_brands,
     })
 
 
@@ -123,5 +126,23 @@ def product(r, product_id):
          'product': product,
          'cross_marks': cross_marks,
          'cross_cars': cross_cars,
+    })
+
+
+def series(r, ser_id):
+    ct = Category.objects.all()
+
+    current_ser = Dvser.objects.get(
+        id = ser_id
+    )
+    dvorniki = Dvornik.objects.filter(
+        ser = current_ser,
+    )
+
+    return render(r, 'dvorniki/series.html', {
+         'categories': ct,
+
+         'current_ser': current_ser,
+         'dvorniki': dvorniki,
     })
 

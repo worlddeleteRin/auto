@@ -8,9 +8,11 @@ $(".menu__close").click(function() {
     $('body').removeClass("hidden")
 })
 
-$("#list__lamp__item").hover(function() {
-    console.log('you hover it')
-    $(".nav__fixed").addClass("active");
+$(".list__item").hover(function() {
+    current_id = $(this).attr('id')
+    console.log('you hover it', current_id)
+    
+    $(".nav__fixed."+current_id).addClass("active");
 }, function() {
     // console.log('not hover a')
     // if ($(".nav__category__lamps").is(":focus")) {

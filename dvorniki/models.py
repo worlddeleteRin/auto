@@ -62,6 +62,7 @@ class Dvtype(models.Model):
 
 class Dvbrand(models.Model):
     name = models.CharField(max_length = 200)
+    
     # image = models.CharField(max_length = 3000, default = 'https://placehold.it/50x50')
     # description = models.CharField(max_length = 3000, default = '')
 
@@ -70,6 +71,9 @@ class Dvbrand(models.Model):
 
 
 class Dvser(models.Model):
+    brand = models.ForeignKey(Dvbrand,
+    on_delete = models.CASCADE, default = None,
+    blank = True, null = True)
     name = models.CharField(max_length = 200)
     # image = models.CharField(max_length = 3000, default = 'https://placehold.it/50x50')
     # description = models.CharField(max_length = 3000, default = '')
@@ -90,6 +94,9 @@ class Dvornik(models.Model):
 
     name = models.CharField(max_length=300)
     price = models.IntegerField(default=0)
+    sku = models.CharField(max_length=300, default = '')
+    length = models.CharField(max_length=300, default = '')
+    country = models.CharField(max_length=300, default = '')
     imgsrc = models.CharField(max_length = 2000, default="https://placehold.it/420x327")
     
     

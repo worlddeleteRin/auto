@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'lamp',
     'cart',
     'dvorniki',
+    'himiya',
 ]
 
 MIDDLEWARE = [

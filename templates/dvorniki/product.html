@@ -13,7 +13,6 @@
                 {{ product.name }}
             </div>
 
-
                 <div class="product__item__price">
                 <span>
                 {{ product.price }} &#8381
@@ -55,6 +54,14 @@
                         
                     <div class="product__item__properties__item">
                         <span>
+                            sku:
+                        </span>
+                        <span>
+                            {{ product.sku }}
+                        </span>
+                    </div>
+                    <div class="product__item__properties__item">
+                        <span>
                             Бренд:
                         </span>
                         <span>
@@ -68,6 +75,24 @@
                         </span>
                         <span>
                             {{ product.ser }}
+                        </span>
+                    </div>
+
+                    <div class="product__item__properties__item">
+                        <span>
+                            Длина:
+                        </span>
+                        <span>
+                            {{ product.length }} см
+                        </span>
+                    </div>
+
+                    <div class="product__item__properties__item">
+                        <span>
+                            Производитель:
+                        </span>
+                        <span>
+                            {{ product.country }} 
                         </span>
                     </div>
 

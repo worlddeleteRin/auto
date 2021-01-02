@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponse, HttpResponseRedirect, JsonRe
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .models import *
+from himiya.models import * 
 
 from collections import defaultdict
 
@@ -17,8 +18,10 @@ from django.core import serializers
 
 
 def index(request):
-    autos = Cars.objects.values('mark').distinct()
     ct = Category.objects.all()
+    himiya_categories = HimiyaCategory.objects.all()
+    autos = Cars.objects.values('mark').distinct()
+    
     brands = Brand.objects.all()
 
     # tests here
@@ -33,8 +36,9 @@ def index(request):
 
     # tests endgs
     return render(request, 'lamp/index.html', {
-        'cars': autos,
+        'himiya_categories': himiya_categories,
         'categories': ct,
+        'cars': autos,
         'brands': brands,
 
         'lamps': lamps,
@@ -46,37 +50,42 @@ def index(request):
         })
 
 def mark(request, car_mark):
-    car_mark = urllib.parse.unquote(car_mark)
     ct = Category.objects.all()
+    himiya_categories = HimiyaCategory.objects.all()
+    car_mark = urllib.parse.unquote(car_mark)
     a = Cars.objects.values('mark', 'model').distinct()
     models = a.filter(mark = car_mark)
 
     return render(request, 'lamp/mark.html',
     {
+        'himiya_categories': himiya_categories,
+        'categories': ct,
         'models': models,
         'selected_mark': car_mark,
-        'categories': ct,
     })
 
 def model(request, car_mark, car_model):
+    ct = Category.objects.all()
+    himiya_categories = HimiyaCategory.objects.all()
     car_mark = urllib.parse.unquote(car_mark)
     car_model = urllib.parse.unquote(car_model)
-    ct = Category.objects.all()
     generation = Cars.objects.filter(mark = car_mark, model = car_model)
     return render(request, 'lamp/model.html',
     {
+        'himiya_categories': himiya_categories,
+        'categories': ct,
         'gen': generation,
         'selected_mark': car_mark,
         'selected_model': car_model,
-        'categories': ct,
     })
 
 def gen(request, car_mark, car_model, car_gen):
+    ct = Category.objects.all()
+    himiya_categories = HimiyaCategory.objects.all()
     car_mark = urllib.parse.unquote(car_mark)
     car_model = urllib.parse.unquote(car_model)
     car_gen = urllib.parse.unquote(car_gen)
 
-    ct = Category.objects.all()
 
     #    Ищем машину по марке, модели, поколению, получаем искомое авто
     auto = Cars.objects.filter(mark=car_mark, model=car_model, gen=car_gen)
@@ -119,41 +128,44 @@ def gen(request, car_mark, car_model, car_gen):
 
     return render(request, 'lamp/gen.html',
     {
+        'himiya_categories': himiya_categories,
+        'categories': ct,
         'selected_mark': car_mark,
         'selected_model': car_model,
         'selected_gen': car_gen,
         'destCat': dc,
-        'categories': ct,
     })
 
 def car_lamps(request, car_mark, car_model, car_gen, dest, cat):
+    ct = Category.objects.all()
+    himiya_categories = HimiyaCategory.objects.all()
     car_mark = urllib.parse.unquote(car_mark)
     car_model = urllib.parse.unquote(car_model)
     car_gen = urllib.parse.unquote(car_gen)
     dest = urllib.parse.unquote(dest)
     cat = urllib.parse.unquote(cat)
 
-    ct = Category.objects.all()
 
     car = Cars.objects.filter(mark = car_mark, model = car_model, gen = car_gen)
     lamps = car[0].lamps_set.all()
     lamps = lamps.filter(destination__dest = dest, category__cat = cat)
 
     return render(request, 'lamp/car_lamps.html', {
+        'himiya_categories': himiya_categories,
+        'categories': ct,
         'selected_mark': car_mark,
         'selected_model': car_model,
         'selected_gen': car_gen,
         'destination': dest,
         'category': cat,
         'lamps': lamps,
-        'categories': ct,
     })
 
 def product(request, product_name):
-    product_name = urllib.parse.unquote(product_name)
-
     ct = Category.objects.all()
+    himiya_categories = HimiyaCategory.objects.all()
 
+    product_name = urllib.parse.unquote(product_name)
     product = Lamps.objects.filter(name = product_name)
     pr_type = Lamps.objects.filter(ltype = product[0].ltype)
     cross_cars = pr_type[0].cars.all()
@@ -161,18 +173,20 @@ def product(request, product_name):
     print(len(cross_mark))
     return render(request, 'lamp/product.html',
     {
+        'himiya_categories': himiya_categories,
+        'categories': ct,
         'product': product[0],
         'cross_cars': cross_cars,
         'cross_mark': cross_mark,
-        'categories': ct,
     })
 
 def category(request, cat):
+    ct = Category.objects.all()
+    himiya_categories = HimiyaCategory.objects.all()
     cat = urllib.parse.unquote(cat)
     category = Lamps.objects.filter(category__cat = cat)
 
     autos = Cars.objects.values('mark').distinct()
-    ct = Category.objects.all()
     brands = Brand.objects.all()
     # tests here
     marks = Cars.objects.values('mark', 'mark_norm').distinct()
@@ -184,8 +198,9 @@ def category(request, cat):
 
 
     return render(request, 'lamp/category.html', {
-        'category': cat,
+        'himiya_categories': himiya_categories,
         'categories': ct,
+        'category': cat,
         'cars': autos,
         'brands': brands,
         'lamps': lamps,
@@ -197,10 +212,11 @@ def category(request, cat):
     })
 
 def lamps_type(request, type, cat):
+    ct = Category.objects.all()
+    himiya_categories = HimiyaCategory.objects.all()
+
     type = urllib.parse.unquote(type)
     cat = urllib.parse.unquote(cat)
-
-    ct = Category.objects.all()
 
     lamps = Lamps.objects.filter(ltype__name = type, category__cat = cat)
     print(lamps)
@@ -229,51 +245,57 @@ def lamps_type(request, type, cat):
     marks_length = len(marks_count)
 
     return render(request, 'lamp/type.html',{
-        'lamps': lamps,
+        'himiya_categories': himiya_categories,
         'categories': ct,
+        'lamps': lamps,
         'marks': marks,
         'marks_count': marks_count,
         'marks_length': marks_length,
     })
 
 def brand(request, brand, cat):
+    ct = Category.objects.all()
+    himiya_categories = HimiyaCategory.objects.all()
+
     brand = urllib.parse.unquote(brand)
     cat = urllib.parse.unquote(cat)
 
-    ct = Category.objects.all()
-
     lamps = Lamps.objects.filter(brand__name = brand, category__cat = cat)
     return render(request, 'lamp/brand.html', {
+        'himiya_categories': himiya_categories,
+        'categories': ct,
         'selected_brand': brand,
         'selected_category': cat,
         'lamps': lamps,
-        'categories': ct,
     })
 
 def allbrands(request):
     ct = Category.objects.all()
+    himiya_categories = HimiyaCategory.objects.all()
     brands = Brand.objects.all()
     return render(request, 'lamp/allbrands.html', {
-        'brands': brands,
+        'himiya_categories': himiya_categories,
         'categories': ct,
+        'brands': brands,
     })
 
 def spesbrand(request, brand):
-    brand = urllib.parse.unquote(brand)
-
     ct = Category.objects.all()
+    himiya_categories = HimiyaCategory.objects.all()
+    brand = urllib.parse.unquote(brand)
 
     brand = Brand.objects.get(name = brand)
     brand_lamps = Lamps.objects.filter(brand = brand)
     return render(request, 'lamp/spesbrand.html', {
+        'himiya_categories': himiya_categories,
+        'categories': ct,
         'brand': brand,
         'lamps': brand_lamps,
-        'categories': ct,
     })
 
 def search(request):
-
     ct = Category.objects.all()
+    himiya_categories = HimiyaCategory.objects.all()
 
     s = request.GET['q']
 
@@ -282,6 +304,7 @@ def search(request):
     if (len(lamps) == 0):
         message = 'no lamps found'
     return render(request, 'lamp/search.html', {
+        'himiya_categories': himiya_categories,
         'categories': ct,
         'lamps': lamps,
     })

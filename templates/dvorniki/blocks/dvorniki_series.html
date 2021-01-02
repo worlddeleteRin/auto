@@ -1,0 +1,37 @@
+
+<div class="nice__title">
+    <span>
+    Дворники по сериям
+    </span>
+</div>
+
+<div class="dvseries__block__main">
+    {% for brand in dvbrands  %}
+
+        <div class="dvseries__block">
+            <div class="dvseries__block__title">
+                <span>
+                Бренд:
+                </span>
+                 {{ brand.name }}
+            </div>
+            <div class="dvseries__block__body">
+                {% for ser in brand.dvser_set.all  %}
+                    <a class="dvseries__block__body__item"
+                    href="{% url 'dvorniki:series' ser.id %}"
+                    value="{{ ser.id }}">
+                        <span>
+                            {{ ser.name }}
+                        </span>
+                    </a>
+                {% endfor %}
+            </div>
+            
+        </div>
+        
+    {% endfor %}
+</div>
+
+<script>
+
+</script>

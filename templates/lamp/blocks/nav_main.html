@@ -5,9 +5,10 @@
     
     <div class="nav__category__container">
         <div class="nav__category">
-            <div class="nav__category__logo">
+            <a href="{% url 'lamp:index' %}"
+            class="nav__category__logo">
                 <img src="{% static 'images_site/auto_logo.png' %}" alt="">
-            </div>
+            </a>
             <div class="nav__category__heading">
                 <p>
                     Категории
@@ -21,7 +22,7 @@
                                 Лампы
                                 <i class="gg-arrow-down-r"></i>
                             </a>
-                            <div class="nav__fixed">
+                            <div class="nav__fixed list__lamp__item">
                                 <ul id="nav__category__lamps"
                                 class="drop__block__lvl">
                                     {% for category in categories  %}
@@ -39,7 +40,7 @@
                                 Дворники
                                 <i class="gg-arrow-down-r"></i>
                             </a>
-                            <!-- <div class="nav__fixed">f
+                            <!-- <div class="nav__fixed list__dvorniki__item">f
                                 <ul id="nav__category__dvorniki"
                                 class="drop__block__lvl">
                                     {% for category in categories  %}
@@ -51,6 +52,24 @@
                                     {% endfor %}
                                 </ul>
                             </div> -->
+                        </li>
+                        <li class="list__item" id="nav__category__himiya">
+                            <a href="{% url 'himiya:index' %}" id="dvorniki__link">
+                                Автохимия и косметика
+                                <i class="gg-arrow-down-r"></i>
+                            </a>
+                            <div class="nav__fixed nav__category__himiya">
+                                <ul id="nav__category__block"
+                                class="drop__block__lvl">
+                                    {% for category in himiya_categories  %}
+                                        <li class="drop__block__item">
+                                            <a href="{% url 'himiya:category' category.id %}">
+                                               {{ category.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div> 
                         </li>
                     </ul>
                 </div>
@@ -82,7 +101,7 @@
                 </form>
                 <div class="header__feedback">
                     <div class="phone__block">
-                        <p class="phone__contact">7 978 559-92-86</p>
+                        <p class="phone__contact">7 978 221-55-09</p>
                         <p class="phone__contact__under">По России бесплатно</p>
                     </div>
                 </div>
@@ -158,6 +177,24 @@
                     <a class="mobile__nav__listview__cat" 
                     href="{% url 'lamp:index' %}">
                         Лампы
+                    </a>
+                </li>
+                <li class="mobile__nav__listview__item">
+                    {% comment %} <a class="mobile__nav__listview__icon">
+                        <i class="gg-arrow-right-r"></i>
+                    </a> {% endcomment %}
+                    <a class="mobile__nav__listview__cat" 
+                    href="{% url 'dvorniki:index' %}">
+                        Дворники
+                    </a>
+                </li>
+                <li class="mobile__nav__listview__item">
+                    {% comment %} <a class="mobile__nav__listview__icon">
+                        <i class="gg-arrow-right-r"></i>
+                    </a> {% endcomment %}
+                    <a class="mobile__nav__listview__cat" 
+                    href="{% url 'himiya:index' %}">
+                        Автохимия и косметика
                     </a>
                 </li>
                 {% comment %} end of categories {% endcomment %}
