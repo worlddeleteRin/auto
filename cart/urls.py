@@ -24,4 +24,7 @@ urlpatterns = [
     path('create_order_ajax/', views.create_order_ajax, name = 'create_order_ajax'),
     path('add_product_ajax_dvorniki/', views.add_product_ajax_dvorniki, name = 'add_product_ajax_dvorniki'),
     path('add_product_ajax_himiya/', views.add_product_ajax_himiya, name = 'add_product_ajax_himiya'),
+    path('add_product_ajax_accessories/', views.add_product_ajax_accessories, name = 'add_product_ajax_accessories'),
+    path('add_product_ajax_emergency/', views.add_product_ajax_emergency, name = 'add_product_ajax_emergency'),
+    path('add_product_ajax_uhod/', views.add_product_ajax_uhod, name = 'add_product_ajax_uhod'),
 ]

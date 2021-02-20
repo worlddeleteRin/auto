@@ -4,12 +4,14 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .models import *
 from lamp.models import * 
+from lamp.views import get_static_context
 
 from collections import defaultdict
 
 import pandas as pd
 import urllib.parse
 
+static_context = get_static_context()
 
 def index(request):
     ct = Category.objects.all()
@@ -18,12 +20,14 @@ def index(request):
 
     dv_brands = Dvbrand.objects.all()
 
-    return render(request, 'dvorniki/index.html', {
+    context = {
         'categories': ct,
 
         'marks': marks,
         'dvbrands': dv_brands,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'dvorniki/index.html', context)
 
 
 def mark(request, mark_id):
@@ -36,13 +40,14 @@ def mark(request, mark_id):
         mark = current_mark,
     )
     
-
-    return render(request, 'dvorniki/mark.html', {
+    context = {
         'categories': ct,
 
         'selected_mark': current_mark,
         'models': models,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'dvorniki/mark.html', context)
 
 def model(request, mark_id, model_id):
     ct = Category.objects.all()
@@ -59,13 +64,15 @@ def model(request, mark_id, model_id):
         model = current_model,
     )
     
-    return render(request, 'dvorniki/model.html', {
+    context = {
         'categories': ct,
 
         'selected_mark': current_mark.name,
         'selected_model': current_model.name,
         'cars': cars,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'dvorniki/model.html', context)
 
 def gen(request, mark_id, model_id, gen_id):
     ct = Category.objects.all()
@@ -97,7 +104,7 @@ def gen(request, mark_id, model_id, gen_id):
     print('here is dvorniki')
     print(dvorniki)
     
-    return render(request, 'dvorniki/gen.html', {
+    context = {
         'categories': ct,
 
         'selected_mark': current_mark.name,
@@ -105,7 +112,9 @@ def gen(request, mark_id, model_id, gen_id):
         'selected_gen': current_gen.name,
         # 'cars': cars,
         'dvorniki': dvorniki,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'dvorniki/gen.html', context)
 
 def product(r, product_id):
     ct = Category.objects.all()
@@ -120,13 +129,15 @@ def product(r, product_id):
     )
     cross_cars = product.cars.all()
 
-    return render(r, 'dvorniki/product.html', {
+    context = {
          'categories': ct,
 
          'product': product,
          'cross_marks': cross_marks,
          'cross_cars': cross_cars,
-    })
+    }
+    context.update(static_context)
+    return render(r, 'dvorniki/product.html', context)
 
 
 def series(r, ser_id):
@@ -139,10 +150,12 @@ def series(r, ser_id):
         ser = current_ser,
     )
 
-    return render(r, 'dvorniki/series.html', {
+    context = {
          'categories': ct,
 
          'current_ser': current_ser,
          'dvorniki': dvorniki,
-    })
+    }
+    context.update(static_context)
+    return render(r, 'dvorniki/series.html', context)
 

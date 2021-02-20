@@ -22,4 +22,7 @@ urlpatterns = [
     path('cart/', include('cart.urls')),
     path('dvorniki/', include('dvorniki.urls')),
     path('himiya/', include('himiya.urls')),
+    path('accessories/', include('accessories.urls')),
+    path('emergency/', include('emergency.urls')),
+    path('uhod/', include('uhod.urls')),
 ]

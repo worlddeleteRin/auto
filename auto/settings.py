@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'cart',
     'dvorniki',
     'himiya',
+    'accessories',
+    'emergency',
+    'uhod',
 ]
 
 MIDDLEWARE = [

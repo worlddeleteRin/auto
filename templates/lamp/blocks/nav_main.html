@@ -40,10 +40,10 @@
                                 Дворники
                                 <i class="gg-arrow-down-r"></i>
                             </a>
-                            <!-- <div class="nav__fixed list__dvorniki__item">f
+                            <div class="nav__fixed list__dvorniki__item">
                                 <ul id="nav__category__dvorniki"
                                 class="drop__block__lvl">
-                                    {% for category in categories  %}
+                                    {% for category in dv_categories  %}
                                         <li class="drop__block__item">
                                             <a href="{% url 'lamp:category' category %}">
                                                {{ category }}
@@ -51,7 +51,7 @@
                                         </li>
                                     {% endfor %}
                                 </ul>
-                            </div> -->
+                            </div>
                         </li>
                         <li class="list__item" id="nav__category__himiya">
                             <a href="{% url 'himiya:index' %}" id="dvorniki__link">
@@ -64,6 +64,60 @@
                                     {% for category in himiya_categories  %}
                                         <li class="drop__block__item">
                                             <a href="{% url 'himiya:category' category.id %}">
+                                               {{ category.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div> 
+                        </li>
+                        <li class="list__item" id="nav__category__accessories">
+                            <a href="{% url 'accessories:index' %}" id="dvorniki__link">
+                                Автоаксессуары
+                                <i class="gg-arrow-down-r"></i>
+                            </a>
+                            <div class="nav__fixed nav__category__accessories">
+                                <ul id="nav__category__block"
+                                class="drop__block__lvl">
+                                    {% for category in accessories_categories  %}
+                                        <li class="drop__block__item">
+                                            <a href="{% url 'accessories:category' category.id %}">
+                                               {{ category.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div> 
+                        </li>
+                        <li class="list__item" id="nav__category__emergency">
+                            <a href="{% url 'emergency:index' %}" id="dvorniki__link">
+                                Аварийные принадлежности
+                                <i class="gg-arrow-down-r"></i>
+                            </a>
+                            <div class="nav__fixed nav__category__emergency">
+                                <ul id="nav__category__block"
+                                class="drop__block__lvl">
+                                    {% for category in emergency_categories  %}
+                                        <li class="drop__block__item">
+                                            <a href="{% url 'emergency:category' category.id %}">
+                                               {{ category.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div> 
+                        </li>
+                        <li class="list__item" id="nav__category__uhod">
+                            <a href="{% url 'uhod:index' %}" id="dvorniki__link">
+                                Уход за автомобилем
+                                <i class="gg-arrow-down-r"></i>
+                            </a>
+                            <div class="nav__fixed nav__category__uhod">
+                                <ul id="nav__category__block"
+                                class="drop__block__lvl">
+                                    {% for category in uhod_categories  %}
+                                        <li class="drop__block__item">
+                                            <a href="{% url 'uhod:category' category.id %}">
                                                {{ category.name }}
                                             </a>
                                         </li>
@@ -198,6 +252,34 @@
                     </a>
                 </li>
                 {% comment %} end of categories {% endcomment %}
+                <li class="mobile__nav__listview__item">
+                    {% comment %} <a class="mobile__nav__listview__icon">
+                        <i class="gg-arrow-right-r"></i>
+                    </a> {% endcomment %}
+                    <a class="mobile__nav__listview__cat" 
+                    href="{% url 'accessories:index' %}">
+                        Автоаксессуары
+                    </a>
+                </li>
+                <li class="mobile__nav__listview__item">
+                    {% comment %} <a class="mobile__nav__listview__icon">
+                        <i class="gg-arrow-right-r"></i>
+                    </a> {% endcomment %}
+                    <a class="mobile__nav__listview__cat" 
+                    href="{% url 'emergency:index' %}">
+                        Аварийные принадлежности
+                    </a>
+                </li>
+                <li class="mobile__nav__listview__item">
+                    {% comment %} <a class="mobile__nav__listview__icon">
+                        <i class="gg-arrow-right-r"></i>
+                    </a> {% endcomment %}
+                    <a class="mobile__nav__listview__cat" 
+                    href="{% url 'uhod:index' %}">
+                        Уход за автомобилем
+                    </a>
+                </li>
+
 
             </ul>
 

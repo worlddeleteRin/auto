@@ -1,0 +1,17 @@
+
+<div class="nice__title__left">
+    Категории
+</div>
+
+<div class="himiya_categories_list">
+
+    {% for uhod_item in uhod_categories  %}
+        <div class="himiya_category_item">
+            <a  
+            href="{% url 'uhod:category' uhod_item.id %}">
+                {{ uhod_item.name }}
+            </a>
+        </div>
+    {% endfor %}
+
+</div>

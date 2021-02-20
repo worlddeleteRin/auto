@@ -1,0 +1,68 @@
+{% load static %}
+<div class="himiya_products_container">
+
+
+    <div class="products__container">
+
+
+     {% for product in uhod_products  %}
+     
+
+        <div class="product__container">
+
+            <div class="product__title__container">
+           <a href="#">
+                           <div class="product__title">
+                               {{ product.name }}
+                            </div>
+                       </a>
+           </div>
+        
+           <div class="product__card">
+        
+        
+                   <div class="img-wrap">
+                   <a href="{% url 'uhod:product' product.id %}">
+                   <img class="img-wrap__img" src="{% static 'images/uhod/' %}{{ product.imgurl }}">
+                   </a>
+                   </div>
+        
+        
+        
+        
+        
+                   <div class="product__card__info">
+        
+                       <div class="price__container">
+                           <span class="price-new">
+                                {% if product.price %}
+                                {{ product.price }} &#8381
+                                    {% else %}
+                                    -
+                                {% endif %}
+                           </span> 
+                       </div> <!-- price-wrap.// -->
+        
+                       <div class="product__list__button__div">
+                       <a class="product__list__button
+                       product__list__button__uhod" value="{{ product.id }}">
+                       Купить
+                       </a>	
+                       </div>
+                       
+        
+                   </div>
+        
+                   </div>
+
+           </div>
+
+
+           {% endfor %}
+
+
+    </div>
+
+    
+
+</div>

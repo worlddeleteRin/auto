@@ -1,0 +1,80 @@
+{% extends "../lamp/base.html"%}
+{% load static %}
+
+{% block content %}
+
+<div class="nice__title big">
+    {{ current_category }}
+</div>
+
+<div class="himiya_products_container">
+
+
+    <div class="products__container">
+
+
+     {% for product in accessories_products  %}
+
+        <div class="product__container">
+
+            <div class="product__title__container">
+           <a href="#">
+                           <div class="product__title">
+                               {{ product.name }}
+                            </div>
+                       </a>
+           </div>
+        
+           <div class="product__card">
+        
+        
+                   <div class="img-wrap">
+                   <a href="{% url 'accessories:product' product.id %}">
+            
+                   <img class="img-wrap__img" src="{% static 'images/accessories/' %}{{ product.imgurl }}">
+                   </a>
+                   </div>
+        
+        
+        
+        
+        
+                   <div class="product__card__info">
+        
+                       <div class="price__container">
+                       {% if product.price %}
+                           <span class="price-new">{{ product.price }}
+                               <strong>₽</strong>
+                           </span>
+                           {% else %}
+                           <span class="price-new">
+                               <strong>-</strong>
+                           </span>
+                        {% endif %}
+                       </div> <!-- price-wrap.// -->
+        
+                       <div class="product__list__button__div">
+                       <a class="product__list__button
+                       product__list__button__accessories" value="{{ product.id }}">
+                       Купить
+                       </a>	
+                       </div>
+                       
+        
+                   </div>
+        
+                   </div>
+        
+           </div>
+
+
+           {% endfor %}
+
+
+    </div>
+
+    
+
+</div>
+
+{% endblock content %}

@@ -4,6 +4,10 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .models import *
 from himiya.models import * 
+from dvorniki.models import * 
+from accessories.models import * 
+from emergency.models import * 
+from uhod.models import * 
 
 from collections import defaultdict
 
@@ -15,11 +19,24 @@ from django.core import serializers
 
 # Create your views here.
 
-
-
-def index(request):
+def get_static_context():
     ct = Category.objects.all()
     himiya_categories = HimiyaCategory.objects.all()
+    accessories_categories = AccessoriesCategory.objects.all()
+    emergency_categories = EmergencyCategory.objects.all()
+    uhod_categories = UhodCategory.objects.all()
+    static_context = {
+        'categories': ct,
+        'himiya_categories': himiya_categories,
+        'accessories_categories': accessories_categories,
+        'emergency_categories': emergency_categories,
+        'uhod_categories': uhod_categories,
+    }
+    return static_context
+
+static_context = get_static_context()
+
+def index(request):
     autos = Cars.objects.values('mark').distinct()
     
     brands = Brand.objects.all()
@@ -33,11 +50,7 @@ def index(request):
     f_tags = lamps.values('f_tag').distinct()
 
     # lamps_json = serializers.serialize('json', lamps)
-
-    # tests endgs
-    return render(request, 'lamp/index.html', {
-        'himiya_categories': himiya_categories,
-        'categories': ct,
+    context = {
         'cars': autos,
         'brands': brands,
 
@@ -47,7 +60,10 @@ def index(request):
         'gens': gens,
         'types': types,
         'feature_tags': f_tags,
-        })
+    }
+    context.update(static_context)
+    # tests endgs
+    return render(request, 'lamp/index.html', context)
 
 def mark(request, car_mark):
     ct = Category.objects.all()
@@ -56,13 +72,15 @@ def mark(request, car_mark):
     a = Cars.objects.values('mark', 'model').distinct()
     models = a.filter(mark = car_mark)
 
-    return render(request, 'lamp/mark.html',
-    {
+
+    context = {
         'himiya_categories': himiya_categories,
         'categories': ct,
         'models': models,
         'selected_mark': car_mark,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'lamp/mark.html', context)
 
 def model(request, car_mark, car_model):
     ct = Category.objects.all()
@@ -70,14 +88,16 @@ def model(request, car_mark, car_model):
     car_mark = urllib.parse.unquote(car_mark)
     car_model = urllib.parse.unquote(car_model)
     generation = Cars.objects.filter(mark = car_mark, model = car_model)
-    return render(request, 'lamp/model.html',
-    {
+
+    context = {
         'himiya_categories': himiya_categories,
         'categories': ct,
         'gen': generation,
         'selected_mark': car_mark,
         'selected_model': car_model,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'lamp/model.html', context)
 
 def gen(request, car_mark, car_model, car_gen):
     ct = Category.objects.all()
@@ -125,16 +145,16 @@ def gen(request, car_mark, car_model, car_gen):
     for key, value in dest_cat:
         dc[key].append(value)
 
-
-    return render(request, 'lamp/gen.html',
-    {
+    context = {
         'himiya_categories': himiya_categories,
         'categories': ct,
         'selected_mark': car_mark,
         'selected_model': car_model,
         'selected_gen': car_gen,
         'destCat': dc,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'lamp/gen.html', context)
 
 def car_lamps(request, car_mark, car_model, car_gen, dest, cat):
     ct = Category.objects.all()
@@ -150,7 +170,7 @@ def car_lamps(request, car_mark, car_model, car_gen, dest, cat):
     lamps = car[0].lamps_set.all()
     lamps = lamps.filter(destination__dest = dest, category__cat = cat)
 
-    return render(request, 'lamp/car_lamps.html', {
+    context = {
         'himiya_categories': himiya_categories,
         'categories': ct,
         'selected_mark': car_mark,
@@ -159,7 +179,9 @@ def car_lamps(request, car_mark, car_model, car_gen, dest, cat):
         'destination': dest,
         'category': cat,
         'lamps': lamps,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'lamp/car_lamps.html', context)
 
 def product(request, product_name):
     ct = Category.objects.all()
@@ -171,14 +193,16 @@ def product(request, product_name):
     cross_cars = pr_type[0].cars.all()
     cross_mark =  cross_cars.values('mark', 'mark_norm').distinct()
     print(len(cross_mark))
-    return render(request, 'lamp/product.html',
-    {
+
+    context = {
         'himiya_categories': himiya_categories,
         'categories': ct,
         'product': product[0],
         'cross_cars': cross_cars,
         'cross_mark': cross_mark,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'lamp/product.html', context)
 
 def category(request, cat):
     ct = Category.objects.all()
@@ -196,8 +220,7 @@ def category(request, cat):
     lamps = Lamps.objects.all()
     f_tags = lamps.values('f_tag').distinct()
 
-
-    return render(request, 'lamp/category.html', {
+    context = {
         'himiya_categories': himiya_categories,
         'categories': ct,
         'category': cat,
@@ -209,7 +232,9 @@ def category(request, cat):
         'gens': gens,
         'types': types,
         'feature_tags': f_tags,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'lamp/category.html', context)
 
 def lamps_type(request, type, cat):
     ct = Category.objects.all()
@@ -244,14 +269,16 @@ def lamps_type(request, type, cat):
 
     marks_length = len(marks_count)
 
-    return render(request, 'lamp/type.html',{
+    context = {
         'himiya_categories': himiya_categories,
         'categories': ct,
         'lamps': lamps,
         'marks': marks,
         'marks_count': marks_count,
         'marks_length': marks_length,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'lamp/type.html', context)
 
 def brand(request, brand, cat):
     ct = Category.objects.all()
@@ -261,23 +288,29 @@ def brand(request, brand, cat):
     cat = urllib.parse.unquote(cat)
 
     lamps = Lamps.objects.filter(brand__name = brand, category__cat = cat)
-    return render(request, 'lamp/brand.html', {
+
+    context = {
         'himiya_categories': himiya_categories,
         'categories': ct,
         'selected_brand': brand,
         'selected_category': cat,
         'lamps': lamps,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'lamp/brand.html', context)
 
 def allbrands(request):
     ct = Category.objects.all()
     himiya_categories = HimiyaCategory.objects.all()
     brands = Brand.objects.all()
-    return render(request, 'lamp/allbrands.html', {
+
+    context = {
         'himiya_categories': himiya_categories,
         'categories': ct,
         'brands': brands,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'lamp/allbrands.html', context)
 
 def spesbrand(request, brand):
     ct = Category.objects.all()
@@ -286,12 +319,15 @@ def spesbrand(request, brand):
 
     brand = Brand.objects.get(name = brand)
     brand_lamps = Lamps.objects.filter(brand = brand)
-    return render(request, 'lamp/spesbrand.html', {
+
+    context = {
         'himiya_categories': himiya_categories,
         'categories': ct,
         'brand': brand,
         'lamps': brand_lamps,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'lamp/spesbrand.html', context)
 
 def search(request):
     ct = Category.objects.all()
@@ -303,11 +339,14 @@ def search(request):
 
     if (len(lamps) == 0):
         message = 'no lamps found'
-    return render(request, 'lamp/search.html', {
+    
+    context = {
         'himiya_categories': himiya_categories,
         'categories': ct,
         'lamps': lamps,
-    })
+    }
+    context.update(static_context)
+    return render(request, 'lamp/search.html', context)
 
 def form_car(request):
 

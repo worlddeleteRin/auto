@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .models import *
 from lamp.models import * 
+from lamp.views import get_static_context
 
 
 from collections import defaultdict
@@ -11,6 +12,7 @@ from collections import defaultdict
 import pandas as pd
 import urllib.parse
 
+static_context = get_static_context()
 
 def index(request):
 # ct = Category.objects.all()
@@ -23,6 +25,7 @@ def index(request):
         'categories': ct,
         'himiya_products': himiya_products,
     }
+    context.update(static_context)
     return render(request, template, context)
 
 def product(request, product_id):
@@ -37,6 +40,7 @@ def product(request, product_id):
         'categories': ct,
         'product': current_product,
     }
+    context.update(static_context)
     return render(request, template, context)
 
 
@@ -53,5 +57,6 @@ def category(request, category_id):
         'categories': ct,
         'himiya_products': himiya_products,
     }
+    context.update(static_context)
     return render(request, template, context)
 

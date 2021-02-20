@@ -1785,6 +1785,9 @@ box-shadow: 0px 7px 13px 0px rgba(0,0,0,0.26);
     font-size: 25px;
     font-family: 'gpro-text-medium';
 }
+.nice__title.big {
+    font-size: calc(17px + 0.5vw);
+}
 
 
 .dvseries__block__main {

@@ -1,0 +1,60 @@
+{% extends "../lamp/base.html"%}
+{% load static %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="product__item__wrapper">
+        <div class="product__item__img">
+            <img src="{% static 'images/emergency/' %}{{ product.imgurl }}" alt="">
+        </div>
+        <div class="product__item__info">
+            <div class="product__item__name">
+                {{ product.name }}
+            </div>
+
+                <div class="product__item__price">
+                <span>
+                {% if product.price %}
+                {{ product.price }} &#8381
+                    {% else %}
+                    -
+                {% endif %}
+                </span>
+                </div>
+                    <div class="product__item__page__addcart">
+                    <a class="product__list__button
+                    product__list__button__emergency"
+                     value="{{product.id}}">
+                    В корзину
+                    </a>	
+                    </div>
+
+
+                <div class="product__item__properties">
+                    <div class="product__item__properties__title">
+                            <span>
+                            Описание
+                            </span>
+                    </div>
+                    <div class="product__item__properties__items">
+
+                        {{ product.description }}
+
+                    </div>
+                    
+    </div>
+
+      
+
+
+{% endblock content %}
+
+{% block javascript %}
+
+<script>
+     
+</script>
+
+{% endblock javascript %}
