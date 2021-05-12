@@ -33,4 +33,10 @@ urlpatterns = [
     path('form_car/', views.form_car, name="form_car"),
 
     path('filter_update_lamps/', views.filter_update_lamps, name='filter_update_lamps'),
+    # about us page
+    path('about_us', views.about_us, name = 'about_us'),
+    # delivery page
+    path('delivery', views.delivery, name = 'delivery'),
+    # contact page
+    path('contacts', views.contacts, name = 'contacts'),
 ]

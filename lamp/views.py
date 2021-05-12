@@ -36,6 +36,24 @@ def get_static_context():
 
 static_context = get_static_context()
 
+def about_us(request):
+    template = 'lamp/about_us.html'
+    context = {}
+    context.update(static_context)
+    return render(request, template, context)
+
+def delivery(request):
+    template = 'lamp/delivery.html'
+    context = {}
+    context.update(static_context)
+    return render(request, template, context)
+
+def contacts(request):
+    template = 'lamp/contacts.html'
+    context = {}
+    context.update(static_context)
+    return render(request, template, context)
+
 def index(request):
     autos = Cars.objects.values('mark').distinct()
     
@@ -426,7 +444,5 @@ def filter_update_lamps(request):
     return render(request, 'lamp/blocks/products_list.html', {
         'lamps': l2,
     })
-
-
 
 

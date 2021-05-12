@@ -155,7 +155,7 @@
                 </form>
                 <div class="header__feedback">
                     <div class="phone__block">
-                        <p class="phone__contact">7 978 221-55-09</p>
+                        <p class="phone__contact">7 978 867-97-67</p>
                         <p class="phone__contact__under">По России бесплатно</p>
                     </div>
                 </div>
@@ -177,17 +177,17 @@
                 <div class="header__middle__menu">
                     <ul class="header__middle__nav">
                         <li class="header__middle__nav__item">
-                            <a href="">
+                            <a href="{% url 'lamp:about_us' %}">
                                 О компании
                             </a>
                         </li>
                         <li class="header__middle__nav__item">
-                            <a href="">
-                                Акции
+                            <a href="{% url 'lamp:delivery' %}">
+                                Доставка и оплата
                             </a>
                         </li>
                         <li class="header__middle__nav__item">
-                            <a href="">
+                            <a href="{% url 'lamp:contacts' %}">
                                 Контакты
                             </a>
                         </li>
@@ -196,10 +196,6 @@
                         <a class="header__middle__feedback__button"
                         href="">
                         Заказать звонок
-                        </a>
-                        <a class="header__middle__feedback__button"
-                        href="">
-                        Клиентская служба
                         </a>
                     </div>
                 </div>
